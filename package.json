@@ -1,0 +1,20 @@
+{
+  "name": "nexspace",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test && node sendReport.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.55.1",
+    "@types/node": "^24.5.2"
+  },
+  "dependencies": {
+    "dotenv": "^17.3.1",
+    "nodemailer": "^7.0.7"
+  }
+}
