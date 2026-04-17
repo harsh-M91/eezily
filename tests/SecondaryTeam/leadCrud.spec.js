@@ -47,7 +47,7 @@ test.describe('Add Lead as Primary Team', () => {
         await expect(page.locator('tbody')).toContainText(`+91-${phoneNumber}`);
         await expect(page.locator('tbody')).toContainText('Personal');
         await expect(page.locator('tbody')).toContainText('Sale');
-        console.log("Testing");
+        
     });
 
 
