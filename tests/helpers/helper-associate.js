@@ -20,6 +20,7 @@ const PrimaryTeamLogin = async (page, aUsername, aPassword) => {
 };
 
 const PrimaryTeamLeadCreate = async (page, firstName, lastName, phoneNumber, email) => {
+  await expect(page.getByRole('button', { name: 'Leads Leads' })).toBeVisible();
   await page.getByRole('button', { name: 'Leads Leads' }).click();
   await page.getByRole('button', { name: 'Add Lead' }).click();
   await page.getByRole('combobox').filter({ hasText: 'Mr.' }).click();

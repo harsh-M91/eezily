@@ -47,6 +47,12 @@ test.describe('Add Lead as Primary Team', () => {
         await expect(page.locator('tbody')).toContainText(`+91-${phoneNumber}`);
         await expect(page.locator('tbody')).toContainText('Personal');
         await expect(page.locator('tbody')).toContainText('Sale');
+
+        await expect(page.getByRole('button', { name: 'Contacts Contacts' })).toBeVisible();
+        await page.getByRole('button', { name: 'Contacts Contacts' }).click();
+        await expect(page.getByText(`Mr ${firstName} ${lastName}`)).toBeVisible();
+        await expect(page.getByText(email)).toBeVisible();
+        await expect(page.getByText(`+91-${phoneNumber}`)).toBeVisible();
         
     });
 
