@@ -33,6 +33,7 @@ test.describe('Add Lead as Primary Team', () => {
     test('Login as primary team and Create Lead', async ({ page }) => {
         await PrimaryTeamLoginPage(page, aBaseURL);
         await PrimaryTeamLogin(page, aUsername, aPassword);
+        await expect(page.getByRole('button', { name: 'Leads Leads' })).toBeVisible();
         await expect(page).not.toHaveURL(aBaseURL);
 
         const firstName = getRandomName();
