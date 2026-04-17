@@ -1,5 +1,5 @@
 const {test, expect} = require('@playwright/test');
-const { PrimaryTeamLoginPage, PrimaryTeamLogin} = require('../helpers/helper-login');
+const { PrimaryTeamLoginPage, PrimaryTeamLogin} = require('../helpers/helper-associate');
 const { envConfig } = require('../config/env');
 const { aBaseURL, aUsername, aPassword} = envConfig;
 
