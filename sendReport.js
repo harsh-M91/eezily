@@ -16,7 +16,7 @@ let reportContent = fs.readFileSync(reportPath);
 
 // Define recipients (you can add multiple)
 const recipients = [
-  "daveharsh09.oneclick@gmail.com", "jinansh_shah@momentum91.com"
+  "daveharsh09.oneclick@gmail.com", "sagar_chhatbar@momentum91.com"
   
 ];
 
