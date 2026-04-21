@@ -22,7 +22,7 @@ test.describe('Add Lead as Primary Team', () => {
         const email = getUniqueYopmailEmail();
 
         await PrimaryTeamLeadCreate(page, firstName, lastName, phoneNumber, email);
-        await expect(page.getByText('Lead created successfully!')).toBeVisible();
+        await expect(page.getByRole('status')).toContainText('Lead created successfully!');
 
         await expect(page.getByText(`${firstName} ${lastName}`)).toBeVisible();
         await expect(page.locator('tbody')).toContainText(email);
@@ -49,7 +49,7 @@ test.describe('Add Lead as Primary Team', () => {
         const email1 = getUniqueYopmailEmail();
 
         await PrimaryTeamLeadCreate(page, firstName1, lastName1, phoneNumber, email1);
-        await expect(page.getByText('Lead created successfully!')).toBeVisible();
+        await expect(page.getByRole('status')).toContainText('Lead created successfully!');
         await expect(page.getByText(`${firstName1} ${lastName1}`)).toBeVisible();
         await expect(page.locator('tbody')).toContainText(email1);
         await expect(page.locator('tbody')).toContainText(`+91-${phoneNumber}`);
@@ -82,7 +82,7 @@ test.describe('Add Lead as Primary Team', () => {
         const email = getUniqueYopmailEmail();
 
         await PrimaryTeamLeadCreate(page, firstName1, lastName1, phoneNumber1, email);
-        await expect(page.getByText('Lead created successfully!')).toBeVisible();
+        await expect(page.getByRole('status')).toContainText('Lead created successfully!');
         await expect(page.getByText(`${firstName1} ${lastName1}`)).toBeVisible();
         await expect(page.locator('tbody')).toContainText(email);
         await expect(page.locator('tbody')).toContainText(`+91-${phoneNumber1}`);
@@ -139,7 +139,7 @@ test.describe('Add Lead as Primary Team', () => {
         await page.getByRole('textbox', { name: 'Search localities' }).fill('gota');
         await page.locator('span.flex-1:has-text("Gota")').click();
         await page.getByRole('button', { name: 'Create Lead' }).click();
-        await expect(page.getByText('Lead created successfully!')).toBeVisible();
+        await expect(page.getByRole('status')).toContainText('Lead created successfully!');
     });
 
     test('Add another lead from same contact via Phone-number', async ({ page }) => {
@@ -179,6 +179,6 @@ test.describe('Add Lead as Primary Team', () => {
         await page.getByRole('textbox', { name: 'Search localities' }).fill('gota');
         await page.locator('span.flex-1:has-text("Gota")').click();
         await page.getByRole('button', { name: 'Create Lead' }).click();
-        await expect(page.getByText('Lead created successfully!')).toBeVisible();
+        await expect(page.getByRole('status')).toContainText('Lead created successfully!');
     });
 });
