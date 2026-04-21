@@ -54,6 +54,12 @@ test.describe('Add Lead as Primary Team', () => {
         await expect(page.locator('tbody')).toContainText(email1);
         await expect(page.locator('tbody')).toContainText(`+91-${phoneNumber}`);
 
+        await expect(page.getByRole('button', { name: 'Contacts Contacts' })).toBeVisible();
+        await page.getByRole('button', { name: 'Contacts Contacts' }).click();
+        await expect(page.getByText(`Mr ${firstName1} ${lastName1}`)).toBeVisible();
+        await expect(page.getByText(email1)).toBeVisible();
+        await expect(page.getByText(`+91-${phoneNumber}`)).toBeVisible();
+
         // Try to create second lead with same phone number
         const firstName2 = getRandomName();
         const lastName2 = getRandomName();
@@ -86,6 +92,12 @@ test.describe('Add Lead as Primary Team', () => {
         await expect(page.getByText(`${firstName1} ${lastName1}`)).toBeVisible();
         await expect(page.locator('tbody')).toContainText(email);
         await expect(page.locator('tbody')).toContainText(`+91-${phoneNumber1}`);
+
+        await expect(page.getByRole('button', { name: 'Contacts Contacts' })).toBeVisible();
+        await page.getByRole('button', { name: 'Contacts Contacts' }).click();
+        await expect(page.getByText(`Mr ${firstName1} ${lastName1}`)).toBeVisible();
+        await expect(page.getByText(email)).toBeVisible();
+        await expect(page.getByText(`+91-${phoneNumber1}`)).toBeVisible();
 
         // Try to create second lead with same email
         const firstName2 = getRandomName();
