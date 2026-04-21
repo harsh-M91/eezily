@@ -28,7 +28,7 @@ transporter.sendMail({
   text: `Hi There,\n\nI’ve attached the most recent Playwright test report.\nPlease take a look and share your feedback if needed.\n\nNote: Download the attached file and open it in any browser.`,  
   attachments: [
     {
-      filename: "report.html",  
+      filename: "testReport.html",  
       content: reportContent,  
     },
   ],
