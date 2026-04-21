@@ -10,10 +10,11 @@ test.beforeEach(async ({ page }) => {
 test.describe('Add Lead as Primary Team', () => {
 
     test('Login as primary team and Create Lead', async ({ page }) => {
+        //Go To the login page
         await PrimaryTeamLoginPage(page, aBaseURL);
+        //Login as primary team
         await PrimaryTeamLogin(page, aUsername, aPassword);
         await expect(page.getByRole('button', { name: 'Leads Leads' })).toBeVisible();
-        await expect(page).not.toHaveURL(aBaseURL);
 
         const firstName = getRandomName();
         const lastName = getRandomName();
@@ -21,6 +22,7 @@ test.describe('Add Lead as Primary Team', () => {
         const email = getUniqueYopmailEmail();
 
         await PrimaryTeamLeadCreate(page, firstName, lastName, phoneNumber, email);
+        await expect(page.getByText('Lead created successfully!')).toBeVisible();
 
         await expect(page.getByText(`${firstName} ${lastName}`)).toBeVisible();
         await expect(page.locator('tbody')).toContainText(email);
@@ -47,6 +49,7 @@ test.describe('Add Lead as Primary Team', () => {
         const email1 = getUniqueYopmailEmail();
 
         await PrimaryTeamLeadCreate(page, firstName1, lastName1, phoneNumber, email1);
+        await expect(page.getByText('Lead created successfully!')).toBeVisible();
         await expect(page.getByText(`${firstName1} ${lastName1}`)).toBeVisible();
         await expect(page.locator('tbody')).toContainText(email1);
         await expect(page.locator('tbody')).toContainText(`+91-${phoneNumber}`);
@@ -66,7 +69,9 @@ test.describe('Add Lead as Primary Team', () => {
     });
 
     test('Should not create lead with duplicate email', async ({ page }) => {
+        //Go To the login page
         await PrimaryTeamLoginPage(page, aBaseURL);
+        //Login as primary team
         await PrimaryTeamLogin(page, aUsername, aPassword);
         await expect(page.getByRole('button', { name: 'Leads Leads' })).toBeVisible();
 
@@ -77,6 +82,7 @@ test.describe('Add Lead as Primary Team', () => {
         const email = getUniqueYopmailEmail();
 
         await PrimaryTeamLeadCreate(page, firstName1, lastName1, phoneNumber1, email);
+        await expect(page.getByText('Lead created successfully!')).toBeVisible();
         await expect(page.getByText(`${firstName1} ${lastName1}`)).toBeVisible();
         await expect(page.locator('tbody')).toContainText(email);
         await expect(page.locator('tbody')).toContainText(`+91-${phoneNumber1}`);
@@ -96,7 +102,9 @@ test.describe('Add Lead as Primary Team', () => {
     });
 
     test('Add another lead from same contact via name', async ({ page }) => {
+        //Go To the login page
         await PrimaryTeamLoginPage(page, aBaseURL);
+        //Login as primary team
         await PrimaryTeamLogin(page, aUsername, aPassword);
         await expect(page.getByRole('button', { name: 'Leads Leads' })).toBeVisible();
         await page.getByRole('button', { name: 'Leads Leads' }).click();
@@ -131,15 +139,18 @@ test.describe('Add Lead as Primary Team', () => {
         await page.getByRole('textbox', { name: 'Search localities' }).fill('gota');
         await page.locator('span.flex-1:has-text("Gota")').click();
         await page.getByRole('button', { name: 'Create Lead' }).click();
+        await expect(page.getByText('Lead created successfully!')).toBeVisible();
     });
 
     test('Add another lead from same contact via Phone-number', async ({ page }) => {
+        //Go To the login page
         await PrimaryTeamLoginPage(page, aBaseURL);
+        //Login as primary team
         await PrimaryTeamLogin(page, aUsername, aPassword);
         await expect(page.getByRole('button', { name: 'Leads Leads' })).toBeVisible();
         await page.getByRole('button', { name: 'Leads Leads' }).click();
 
-        // Enter the same first name and check if the existing contact is visible in dropdown
+        // Enter the same number and check if the existing contact is visible in dropdown
         await page.getByRole('button', { name: 'Add Lead' }).click();
         await page.getByRole('textbox', { name: 'Phone number' }).fill('9090909090');
         await page.getByRole('button', { name: '@harsh dave' }).click();
@@ -168,5 +179,6 @@ test.describe('Add Lead as Primary Team', () => {
         await page.getByRole('textbox', { name: 'Search localities' }).fill('gota');
         await page.locator('span.flex-1:has-text("Gota")').click();
         await page.getByRole('button', { name: 'Create Lead' }).click();
+        await expect(page.getByText('Lead created successfully!')).toBeVisible();
     });
 });
