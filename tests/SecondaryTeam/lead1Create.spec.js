@@ -1,11 +1,23 @@
 const {test, expect} = require('@playwright/test');
+const fs = require('fs');
+const path = require('path');
 const { PrimaryTeamLoginPage, PrimaryTeamLogin, PrimaryTeamLeadCreate, FillLeadForm, getRandomName, getUniquePhoneNumber, getUniqueYopmailEmail } = require('../helpers/helper-associate');
 const { envConfig } = require('../config/env');
 const { aBaseURL, aUsername, aPassword} = envConfig;
 
+// Only use storage state if auth.json exists
+const authFile = 'auth.json';
+if (fs.existsSync(authFile)) {
+    test.use({ storageState: authFile });
+}
+
 test.beforeEach(async ({ page }) => {
     await page.setViewportSize({ width: 1250, height: 720 });
-  });
+});
+
+const saveAuthState = async (page) => {
+    await page.context().storageState({ path: 'auth.json' });
+};
 
 test.describe('Add Lead as Primary Team', () => {
 
@@ -15,6 +27,9 @@ test.describe('Add Lead as Primary Team', () => {
         //Login as primary team
         await PrimaryTeamLogin(page, aUsername, aPassword);
         await expect(page.getByRole('button', { name: 'Leads Leads' })).toBeVisible();
+        
+        // Save authentication state after login
+        await saveAuthState(page);
 
         const firstName = getRandomName();
         const lastName = getRandomName();
@@ -38,9 +53,8 @@ test.describe('Add Lead as Primary Team', () => {
     });
 
     test('Should not create lead with duplicate phone number', async ({ page }) => {
+        // Login (will use cached auth state from auth.json)
         await PrimaryTeamLoginPage(page, aBaseURL);
-        await PrimaryTeamLogin(page, aUsername, aPassword);
-        await expect(page.getByRole('button', { name: 'Leads Leads' })).toBeVisible();
 
         // Create first lead
         const firstName1 = getRandomName();
@@ -75,11 +89,8 @@ test.describe('Add Lead as Primary Team', () => {
     });
 
     test('Should not create lead with duplicate email', async ({ page }) => {
-        //Go To the login page
+        // //Go To the login page
         await PrimaryTeamLoginPage(page, aBaseURL);
-        //Login as primary team
-        await PrimaryTeamLogin(page, aUsername, aPassword);
-        await expect(page.getByRole('button', { name: 'Leads Leads' })).toBeVisible();
 
         // Create first lead
         const firstName1 = getRandomName();
@@ -114,11 +125,9 @@ test.describe('Add Lead as Primary Team', () => {
     });
 
     test('Add another lead from same contact via name', async ({ page }) => {
-        //Go To the login page
+        // //Go To the login page
         await PrimaryTeamLoginPage(page, aBaseURL);
-        //Login as primary team
-        await PrimaryTeamLogin(page, aUsername, aPassword);
-        await expect(page.getByRole('button', { name: 'Leads Leads' })).toBeVisible();
+    
         await page.getByRole('button', { name: 'Leads Leads' }).click();
 
         // Enter the same first name and check if the existing contact is visible in dropdown
@@ -155,11 +164,9 @@ test.describe('Add Lead as Primary Team', () => {
     });
 
     test('Add another lead from same contact via Phone-number', async ({ page }) => {
-        //Go To the login page
+        // //Go To the login page
         await PrimaryTeamLoginPage(page, aBaseURL);
-        //Login as primary team
-        await PrimaryTeamLogin(page, aUsername, aPassword);
-        await expect(page.getByRole('button', { name: 'Leads Leads' })).toBeVisible();
+       
         await page.getByRole('button', { name: 'Leads Leads' }).click();
 
         // Enter the same number and check if the existing contact is visible in dropdown
